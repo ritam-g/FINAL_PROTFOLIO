@@ -1,63 +1,120 @@
-import { Mail, Linkedin, Github } from "lucide-react";
-import Reveal from "@/components/ui/Reveal";
-import Eyebrow from "@/components/layout/Eyebrow";
-import TraceLine from "@/components/sections/TraceLine";
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Mail, Loader2, CheckCircle2 } from "lucide-react";
 import { profile } from "@/data/profile";
-import { CONTACT_NODES, SECTION_IDS } from "@/lib/constants";
+import { SectionWrapper } from "@/components/layout/SectionWrapper";
+import { SectionHeading } from "@/components/shared/SectionHeading";
+import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
+import { fadeInUp } from "@/lib/utils/animations";
 
-/**
- * Contact / Footer section — trace line, CTA links, and copyright.
- */
-export default function Contact() {
+export function Contact() {
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("loading");
+    
+    const formData = new FormData(e.currentTarget);
+    
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        body: JSON.stringify(Object.fromEntries(formData)),
+        headers: { "Content-Type": "application/json" }
+      });
+      
+      if (res.ok) setStatus("success");
+      else setStatus("error");
+    } catch {
+      setStatus("error");
+    }
+  }
+
   return (
-    <section id={SECTION_IDS.CONTACT} className="max-w-5xl mx-auto px-6 py-16">
-      <Reveal>
-        {/* Reuses the same TraceLine element as Hero, with the same node labels */}
-        <div className="mb-10">
-          <TraceLine nodes={CONTACT_NODES} />
-        </div>
+    <SectionWrapper id="contact">
+      <SectionHeading title="Get In Touch" subtitle="Contact" />
+      
+      <div className="grid md:grid-cols-[1fr_2fr] gap-12">
+        <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+          <p className="text-muted mb-6 leading-relaxed">
+            I&apos;m currently open to new opportunities. Whether you have a question, a project idea, or just want to say hi, I&apos;ll try my best to get back to you!
+          </p>
+          <div className="text-sm text-accent mb-8 flex items-center gap-2 font-mono">
+            <span>Usually responds within 24 hours</span>
+          </div>
+          
+          <Button asChild variant="outline" className="w-full justify-start gap-3">
+            <a href={`mailto:${profile.email}`}>
+              <Mail size={18} />
+              {profile.email}
+            </a>
+          </Button>
+        </motion.div>
 
-        <Eyebrow>contact</Eyebrow>
-        <h2 className="display text-2xl font-semibold mb-4">
-          Open to opportunities
-        </h2>
-
-        <div className="flex flex-wrap gap-3">
-          <a
-            href={`mailto:${profile.email}`}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-md mono text-sm"
-            style={{
-              background: "var(--accent-green)",
-              color: "#08110C",
-              fontWeight: 500
-            }}
-          >
-            <Mail size={14} /> {profile.email}
-          </a>
-
-          <a
-            href={profile.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2.5 rounded-md mono text-sm card"
-          >
-            <Linkedin size={14} /> LinkedIn
-          </a>
-
-          <a
-            href={profile.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2.5 rounded-md mono text-sm card"
-          >
-            <Github size={14} /> GitHub
-          </a>
-        </div>
-
-        <p className="mono text-xs text-dim mt-12">
-          © 2026 {profile.name.toLowerCase()} — built with next.js
-        </p>
-      </Reveal>
-    </section>
+        <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ delay: 0.2 }}>
+          <Card className="p-6 md:p-8">
+            {status === "success" ? (
+              <div className="flex flex-col items-center justify-center py-12 text-center">
+                <CheckCircle2 size={48} className="text-success mb-4" />
+                <h3 className="text-xl font-bold text-primary mb-2">Message Sent!</h3>
+                <p className="text-muted mb-6">Thanks for reaching out. I&apos;ll get back to you soon.</p>
+                <Button onClick={() => setStatus("idle")}>Send Another</Button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-primary mb-2">Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    className="w-full bg-background border border-border rounded-md px-4 py-2.5 text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-shadow"
+                    placeholder="John Doe"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-primary mb-2">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    className="w-full bg-background border border-border rounded-md px-4 py-2.5 text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-shadow"
+                    placeholder="john@example.com"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-primary mb-2">Message</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    rows={5}
+                    className="w-full bg-background border border-border rounded-md px-4 py-2.5 text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-shadow resize-none"
+                    placeholder="Your message..."
+                  />
+                </div>
+                <Button 
+                  type="submit" 
+                  disabled={status === "loading"}
+                  className="w-full"
+                >
+                  {status === "loading" ? (
+                    <><Loader2 size={18} className="animate-spin mr-2" /> Sending...</>
+                  ) : "Send Message"}
+                </Button>
+                {status === "error" && (
+                  <p className="text-red-500 text-sm mt-2 text-center">Failed to send message. Please try again or use direct email.</p>
+                )}
+              </form>
+            )}
+          </Card>
+        </motion.div>
+      </div>
+    </SectionWrapper>
   );
 }

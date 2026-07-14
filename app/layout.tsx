@@ -28,41 +28,50 @@ const jetbrainsMono = JetBrains_Mono({
 /* ─── Page metadata ──────────────────────────────────────────────────────────── */
 
 export const metadata: Metadata = {
-  title: "Ritam Maty — Full-Stack & Backend Engineer",
+  title: "Ritam Maty — Backend & Full-Stack Engineer",
   description:
-    "Backend & full-stack engineer building AI-integrated, production-grade systems — RAG pipelines, real-time infrastructure, and Kubernetes-native services.",
+    "Backend and Full-Stack Engineer specializing in distributed systems, AI/LLM applications, and cloud-native microservices. Open to opportunities.",
   keywords: [
     "Ritam Maty",
-    "full-stack engineer",
-    "backend engineer",
+    "Backend Engineer",
+    "Full-Stack Developer",
     "Node.js",
-    "Next.js",
+    "React",
     "RAG",
-    "Kubernetes",
-    "portfolio"
+    "LangChain",
+    "Kubernetes"
   ],
-  authors: [{ name: "Ritam Maty" }],
+  authors: [{ name: "Ritam Maty", url: "https://ritam-portfolio.vercel.app" }],
   openGraph: {
-    title: "Ritam Maty — Full-Stack & Backend Engineer",
-    description:
-      "Building AI-integrated, production-grade systems — RAG pipelines, real-time infrastructure, and Kubernetes-native services.",
+    title: "Ritam Maty — Backend & Full-Stack Engineer",
+    description: "Building production-grade APIs, RAG pipelines, and cloud-native systems.",
+    url: "https://ritam-portfolio.vercel.app",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
     type: "website"
-  }
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ritam Maty — Backend & Full-Stack Engineer"
+  },
+  robots: { index: true, follow: true }
 };
 
 /* ─── Root layout ────────────────────────────────────────────────────────────── */
 
 export default function RootLayout({
   children
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html
-      lang="en"
-      className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
-    >
-      <body style={{ fontFamily: "var(--font-inter), sans-serif" }}>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+      <body className="bg-background text-muted antialiased relative">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-accent focus:text-white focus:rounded"
+        >
+          Skip to main content
+        </a>
         {children}
       </body>
     </html>

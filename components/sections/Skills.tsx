@@ -1,37 +1,54 @@
-import Reveal from "@/components/ui/Reveal";
-import Eyebrow from "@/components/layout/Eyebrow";
-import SkillPill from "@/components/ui/SkillPill";
-import { skillsData } from "@/data/skills";
-import { SECTION_IDS } from "@/lib/constants";
+"use client";
 
-/**
- * Skills section — production skills grid + "currently building toward" learning pills.
- */
-export default function Skills() {
+import { motion } from "framer-motion";
+import { skills } from "@/lib/constants/skills";
+import { SkillCategory } from "@/types";
+import { SectionWrapper } from "@/components/layout/SectionWrapper";
+import { SectionHeading } from "@/components/shared/SectionHeading";
+import { fadeInUp, staggerContainer } from "@/lib/utils/animations";
+
+export function Skills() {
+  // Group skills by category
+  const groupedSkills = skills.reduce((acc, skill) => {
+    if (!acc[skill.category]) {
+      acc[skill.category] = [];
+    }
+    acc[skill.category].push(skill);
+    return acc;
+  }, {} as Record<SkillCategory, typeof skills>);
+
+  const categories = Object.keys(groupedSkills) as SkillCategory[];
+
   return (
-    <section id={SECTION_IDS.SKILLS} className="max-w-5xl mx-auto px-6 py-14">
-      <Reveal>
-        <Eyebrow>skills</Eyebrow>
-        <h2 className="display text-2xl font-semibold mb-6">
-          What&apos;s running in production
-        </h2>
-
-        <div className="flex flex-wrap gap-2 mb-8">
-          {skillsData.production.map((skill) => (
-            <SkillPill key={skill} label={skill} variant="production" />
-          ))}
-        </div>
-
-        <p className="mono text-xs text-dim mb-3 uppercase tracking-widest">
-          currently building toward
-        </p>
-
-        <div className="flex flex-wrap gap-2">
-          {skillsData.learning.map((skill) => (
-            <SkillPill key={skill} label={skill} variant="learning" />
-          ))}
-        </div>
-      </Reveal>
-    </section>
+    <SectionWrapper id="skills">
+      <SectionHeading title="Skills & Technologies" subtitle="My toolbox" />
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {categories.map((category, idx) => (
+          <motion.div
+            key={category}
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ delay: idx * 0.1 }}
+          >
+            <h3 className="text-lg font-bold text-primary mb-4 border-b border-border pb-2">
+              {category}
+            </h3>
+            <ul className="flex flex-wrap gap-2">
+              {groupedSkills[category].map((skill) => (
+                <li
+                  key={skill.name}
+                  className="bg-surface border border-border text-muted px-3 py-1.5 rounded-full text-sm font-medium hover:border-accent/50 hover:text-primary transition-colors"
+                >
+                  {skill.name}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        ))}
+      </div>
+    </SectionWrapper>
   );
 }

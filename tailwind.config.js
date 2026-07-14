@@ -9,17 +9,18 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["var(--font-inter)", "sans-serif"],
-        display: ["var(--font-space-grotesk)", "sans-serif"],
+        heading: ["var(--font-geist)", "sans-serif"],
         mono: ["var(--font-jetbrains-mono)", "monospace"]
       },
       colors: {
-        bg: "var(--bg)",
-        "bg-elevated": "var(--bg-elevated)",
-        text: "var(--text)",
-        "text-dim": "var(--text-dim)",
-        "accent-green": "var(--accent-green)",
-        "accent-amber": "var(--accent-amber)",
-        "accent-rose": "var(--accent-rose)"
+        background: "var(--color-bg)",
+        surface: "var(--color-surface)",
+        border: "var(--color-border)",
+        accent: "var(--color-accent)",
+        "accent-glow": "var(--color-accent-glow)",
+        primary: "var(--color-text-primary)",
+        muted: "var(--color-text-muted)",
+        success: "var(--color-success)"
       }
     }
   },

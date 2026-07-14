@@ -1,31 +1,37 @@
-export interface Project {
+export interface NavigationItem {
   name: string;
-  status: "live" | "local";
-  role: string;
-  desc: string;
-  stack: string[];
-  link?: string;
-  githubLink?: string;
-  note?: string;
+  href: string;
+}
+
+export type ProjectTag = "AI/LLM" | "Full-Stack" | "DevOps";
+
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  tech: string[];
+  githubUrl?: string;
+  liveUrl?: string;
+  featured: boolean;
+  tags: ProjectTag[];
+  highlights: string[];
 }
 
 export interface ExperienceEntry {
+  id: string;
   company: string;
   role: string;
   period: string;
+  description?: string;
   points: string[];
+  logo?: string;
 }
 
-export type SkillVariant = "production" | "learning";
+export type SkillCategory = "Languages" | "Frontend" | "Backend" | "Databases" | "AI/LLM" | "Cloud & DevOps";
 
-export interface SkillPillProps {
-  label: string;
-  variant: SkillVariant;
-}
-
-export interface SocialLink {
-  label: string;
-  href: string;
+export interface Skill {
+  name: string;
+  category: SkillCategory;
 }
 
 export interface Profile {

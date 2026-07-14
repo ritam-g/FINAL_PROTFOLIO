@@ -1,25 +1,20 @@
-import StatusBar from "@/components/layout/StatusBar";
-import Hero from "@/components/sections/Hero";
-import Skills from "@/components/sections/Skills";
-import Experience from "@/components/sections/Experience";
-import Projects from "@/components/sections/Projects";
-import Achievements from "@/components/sections/Achievements";
-import Contact from "@/components/sections/Contact";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
+import { Hero, About, Experience, Projects, Skills, Contact } from "@/components/sections";
 
-/**
- * Home page — composes all portfolio sections in order.
- * All real logic lives in the section components.
- */
 export default function Home() {
   return (
-    <main>
-      <StatusBar />
-      <Hero />
-      <Skills />
-      <Experience />
-      <Projects />
-      <Achievements />
-      <Contact />
-    </main>
+    <>
+      <Navbar />
+      <main id="main">
+        <Hero />
+        <About />
+        <Experience />
+        <Projects />
+        <Skills />
+        <Contact />
+      </main>
+      <Footer />
+    </>
   );
 }
