@@ -4,7 +4,8 @@ export interface Project {
   role: string;
   desc: string;
   stack: string[];
-  link: string;
+  link?: string;
+  githubLink?: string;
   note?: string;
 }
 
@@ -31,7 +32,10 @@ export interface Profile {
   name: string;
   tagline: string;
   email: string;
+  phone: string;
   github: string;
   linkedin: string;
+  leetcode: string;
+  githubUsername: string;
   location: string;
 }

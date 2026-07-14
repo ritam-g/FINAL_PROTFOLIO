@@ -1,4 +1,4 @@
-import { Circle, ExternalLink } from "lucide-react";
+import { Circle, ExternalLink, Github } from "lucide-react";
 import type { Project } from "@/types";
 
 interface ProjectCardProps {
@@ -52,8 +52,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         ))}
       </div>
 
-      {/* Live link — only rendered when href is not a placeholder */}
-      {project.link !== "#" && (
+      {/* Link logic */}
+      {project.link ? (
         <a
           href={project.link}
           target="_blank"
@@ -63,7 +63,17 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         >
           View live <ExternalLink size={12} />
         </a>
-      )}
+      ) : project.githubLink ? (
+        <a
+          href={project.githubLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1.5 mono text-xs"
+          style={{ color: "var(--accent-green)" }}
+        >
+          View code <Github size={12} />
+        </a>
+      ) : null}
     </div>
   );
 }

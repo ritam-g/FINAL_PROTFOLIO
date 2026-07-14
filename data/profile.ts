@@ -5,7 +5,10 @@ export const profile: Profile = {
   tagline:
     "Backend & full-stack engineer building AI-integrated, production-grade systems — RAG pipelines, real-time infrastructure, and Kubernetes-native services.",
   email: "ritammaty@gmail.com",
-  github: "https://github.com/",
-  linkedin: "#",
+  phone: "+91 7439163220",
+  github: "https://github.com/ritam-g",
+  linkedin: "https://www.linkedin.com/in/ritammaty/",
+  leetcode: "https://leetcode.com/u/ritammaty/",
+  githubUsername: "ritam-g",
   location: "hyderabad, in"
 };
