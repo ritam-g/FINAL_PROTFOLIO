@@ -11,10 +11,10 @@ interface ProjectCardProps {
  */
 export default function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <div className="card rounded-lg p-5 h-full flex flex-col">
+    <div className="flex flex-col p-5 rounded-lg h-full card">
       {/* Header row */}
-      <div className="flex items-center justify-between mb-3">
-        <h3 className="font-semibold display text-lg">{project.name}</h3>
+      <div className="flex justify-between items-center mb-3">
+        <h3 className="font-semibold text-lg display">{project.name}</h3>
         <span
           className={`mono text-xs flex items-center gap-1.5 status-pill-${project.status}`}
         >
@@ -24,14 +24,14 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       </div>
 
       {/* Description */}
-      <p className="text-sm text-dim mb-3">{project.desc}</p>
+      <p className="mb-3 text-dim text-sm">{project.desc}</p>
 
       {/* Role */}
-      <p className="mono text-xs text-dim mb-4">role: {project.role}</p>
+      <p className="mb-4 text-dim text-xs mono">role: {project.role}</p>
 
       {/* Optional hackathon note */}
       {project.note && (
-        <p className="mono text-xs mb-4" style={{ color: "var(--accent-amber)" }}>
+        <p className="mb-4 text-xs mono" style={{ color: "var(--accent-amber)" }}>
           {project.note}
         </p>
       )}
@@ -41,7 +41,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         {project.stack.map((tech) => (
           <span
             key={tech}
-            className="mono text-xs px-2 py-1 rounded"
+            className="px-2 py-1 rounded text-xs mono"
             style={{
               background: "rgba(232,234,237,0.05)",
               color: "var(--text-dim)"
@@ -58,7 +58,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           href={project.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 mono text-xs"
+          className="flex items-center gap-1.5 text-xs mono"
           style={{ color: "var(--accent-green)" }}
         >
           View live <ExternalLink size={12} />
@@ -68,7 +68,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           href={project.githubLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 mono text-xs"
+          className="flex items-center gap-1.5 text-xs mono"
           style={{ color: "var(--accent-green)" }}
         >
           View code <Github size={12} />
