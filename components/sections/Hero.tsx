@@ -5,8 +5,16 @@ import { ArrowDown, Github, Linkedin, Mail, Code2 } from "lucide-react";
 import { profile } from "@/data/profile";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
+import { TypingHeadline } from "@/components/ui/TypingHeadline";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { fadeInUp, staggerContainer } from "@/lib/utils/animations";
+
+const HEADLINE_PHRASES = [
+  "scalable AI systems.",
+  "production-grade APIs.",
+  "real-time infrastructure.",
+  "RAG pipelines that don't hallucinate.",
+];
 
 export function Hero() {
   const prefersReducedMotion = useReducedMotion();
@@ -30,9 +38,10 @@ export function Hero() {
 
         <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-primary mb-6">
           Hi, I&apos;m {profile.name.split(" ")[0]}.<br />
-          <span className="text-muted text-4xl md:text-6xl lg:text-7xl block mt-2">
-            I build scalable <span className="text-accent">AI systems</span>.
+          <span className="text-muted text-4xl md:text-6xl lg:text-7xl block mt-2 min-h-[3em] sm:min-h-[2em] lg:min-h-0">
+            I build <TypingHeadline phrases={HEADLINE_PHRASES} />
           </span>
+
         </motion.h1>
 
         <motion.p variants={itemVariants} className="text-lg md:text-xl text-muted mb-10 max-w-2xl leading-relaxed text-balance">
