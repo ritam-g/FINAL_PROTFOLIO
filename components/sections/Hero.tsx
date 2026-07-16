@@ -60,16 +60,16 @@ export function Hero() {
         </motion.div>
 
         <motion.div variants={itemVariants} className="flex items-center gap-6 text-muted">
-          <a href={profile.github} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors hover:scale-110 active:scale-95" aria-label="GitHub">
+          <a href={profile.github} target="_blank" rel="noopener noreferrer" className="p-2 -m-2 hover:text-primary transition-all duration-200 hover:scale-110 active:scale-95" aria-label="GitHub">
             <Github size={24} />
           </a>
-          <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors hover:scale-110 active:scale-95" aria-label="LinkedIn">
+          <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="p-2 -m-2 hover:text-primary transition-all duration-200 hover:scale-110 active:scale-95" aria-label="LinkedIn">
             <Linkedin size={24} />
           </a>
-          <a href={profile.leetcode} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors hover:scale-110 active:scale-95" aria-label="LeetCode">
+          <a href={profile.leetcode} target="_blank" rel="noopener noreferrer" className="p-2 -m-2 hover:text-primary transition-all duration-200 hover:scale-110 active:scale-95" aria-label="LeetCode">
             <Code2 size={24} />
           </a>
-          <a href={`mailto:${profile.email}`} className="hover:text-primary transition-colors hover:scale-110 active:scale-95" aria-label="Email">
+          <a href={`mailto:${profile.email}`} className="p-2 -m-2 hover:text-primary transition-all duration-200 hover:scale-110 active:scale-95" aria-label="Email">
             <Mail size={24} />
           </a>
         </motion.div>

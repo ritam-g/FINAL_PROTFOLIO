@@ -37,7 +37,7 @@ export function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
-          ? "bg-background/80 backdrop-blur-md border-b border-border py-4"
+          ? "bg-background/80 backdrop-blur-md border-b border-border-color py-4"
           : "bg-transparent py-6"
       )}
     >
@@ -60,16 +60,25 @@ export function Navbar() {
               const isActive = activeSection === id;
               
               return (
-                <li key={item.name}>
+                <li key={item.name} className="relative">
                   <a
                     href={item.href}
                     className={cn(
-                      "text-sm font-medium transition-colors hover:text-primary",
+                      "text-sm font-medium transition-colors duration-[150ms] hover:text-primary py-2",
                       isActive ? "text-accent" : "text-muted"
                     )}
                   >
                     {item.name}
                   </a>
+                  {isActive && (
+                    <motion.div
+                      layoutId="nav-indicator"
+                      className="absolute -bottom-1 left-0 right-0 h-[2px] bg-accent rounded-full"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                    />
+                  )}
                 </li>
               );
             })}
@@ -83,7 +92,7 @@ export function Navbar() {
 
         {/* Mobile Menu Toggle */}
         <button
-          className="md:hidden text-muted hover:text-primary transition-colors"
+          className="md:hidden p-2 -mr-2 text-muted hover:text-primary transition-colors duration-[150ms] relative after:absolute after:inset-0 after:min-h-[44px] after:min-w-[44px] after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
         >
@@ -93,7 +102,7 @@ export function Navbar() {
 
       {/* Mobile Nav Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-surface border-b border-border shadow-lg py-4 px-6 flex flex-col gap-4">
+        <div className="md:hidden absolute top-full left-0 right-0 bg-surface border-b border-border-color shadow-lg py-4 px-6 flex flex-col gap-4">
           <ul className="flex flex-col gap-4">
             {navigation.map((item) => {
               const id = item.href.replace("#", "");
@@ -105,7 +114,7 @@ export function Navbar() {
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
                     className={cn(
-                      "text-base font-medium transition-colors block py-2 border-b border-border/50",
+                      "text-base font-medium transition-colors block py-2 border-b border-border-color/50",
                       isActive ? "text-accent" : "text-muted"
                     )}
                   >

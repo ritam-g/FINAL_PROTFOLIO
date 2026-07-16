@@ -23,13 +23,13 @@ export function About() {
           </div>
           
           <div className="flex flex-wrap gap-4 text-sm">
-            <div className="bg-surface px-4 py-2 border border-border rounded-md">
+            <div className="bg-surface px-4 py-2 border border-border-color rounded-md">
               <span className="font-bold text-accent">2+</span> Projects in Production
             </div>
-            <div className="bg-surface px-4 py-2 border border-border rounded-md">
+            <div className="bg-surface px-4 py-2 border border-border-color rounded-md">
               <span className="font-bold text-accent">3+</span> AI Systems Built
             </div>
-            <div className="flex items-center gap-2 bg-surface px-4 py-2 border border-border rounded-md font-medium text-primary">
+            <div className="flex items-center gap-2 bg-surface px-4 py-2 border border-border-color rounded-md font-medium text-primary">
               <span className="bg-success rounded-full w-2 h-2 animate-pulse" />
               Currently @ iPROTECHS
             </div>
@@ -45,7 +45,7 @@ export function About() {
         >
           {/* Subtle glow behind the image */}
           <div className="absolute inset-0 bg-accent opacity-20 group-hover:opacity-30 blur-2xl rounded-xl transition-opacity duration-500" />
-          <div className="relative bg-surface border border-border rounded-xl aspect-square overflow-hidden">
+          <div className="relative bg-surface border border-border-color rounded-xl aspect-square overflow-hidden">
             <Image
               src="/ritam.png"
               alt="Ritam Maty"

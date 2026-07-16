@@ -9,20 +9,59 @@ import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { fadeInUp } from "@/lib/utils/animations";
+import { cn } from "@/lib/utils/cn";
 
 export function Contact() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
+  const [touched, setTouched] = useState<{ name?: boolean; email?: boolean; message?: boolean }>({});
+
+  const validateField = (name: string, value: string) => {
+    let error = "";
+    if (name === "name" && !value.trim()) error = "Name is required";
+    if (name === "email") {
+      if (!value.trim()) error = "Email is required";
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) error = "Please enter a valid email";
+    }
+    if (name === "message" && !value.trim()) error = "Message is required";
+    
+    setErrors(prev => ({ ...prev, [name]: error }));
+    return !error;
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setTouched(prev => ({ ...prev, [name]: true }));
+    validateField(name, value);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    if (touched[name as keyof typeof touched]) {
+      validateField(name, value);
+    }
+  };
   
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setStatus("loading");
-    
     const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData) as Record<string, string>;
+    
+    // Validate all fields before submit
+    const isNameValid = validateField("name", data.name);
+    const isEmailValid = validateField("email", data.email);
+    const isMessageValid = validateField("message", data.message);
+    
+    setTouched({ name: true, email: true, message: true });
+    
+    if (!isNameValid || !isEmailValid || !isMessageValid) return;
+
+    setStatus("loading");
     
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
-        body: JSON.stringify(Object.fromEntries(formData)),
+        body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" }
       });
       
@@ -32,6 +71,11 @@ export function Contact() {
       setStatus("error");
     }
   }
+
+  const inputClass = (fieldName: keyof typeof errors) => cn(
+    "w-full bg-background border rounded-md px-4 py-2.5 text-primary transition-colors focus:outline-none focus:border-accent",
+    errors[fieldName] && touched[fieldName] ? "border-accent-rose focus:border-accent-rose" : "border-border-color"
+  );
 
   return (
     <SectionWrapper id="contact">
@@ -64,17 +108,19 @@ export function Contact() {
                 <Button onClick={() => setStatus("idle")}>Send Another</Button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-primary mb-2">Name</label>
                   <input
                     type="text"
                     id="name"
                     name="name"
-                    required
-                    className="w-full bg-background border border-border rounded-md px-4 py-2.5 text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-shadow"
+                    className={inputClass("name")}
                     placeholder="John Doe"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
                   />
+                  {errors.name && touched.name && <p className="text-accent-rose text-xs mt-1.5">{errors.name}</p>}
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-primary mb-2">Email</label>
@@ -82,21 +128,25 @@ export function Contact() {
                     type="email"
                     id="email"
                     name="email"
-                    required
-                    className="w-full bg-background border border-border rounded-md px-4 py-2.5 text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-shadow"
+                    className={inputClass("email")}
                     placeholder="john@example.com"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
                   />
+                  {errors.email && touched.email && <p className="text-accent-rose text-xs mt-1.5">{errors.email}</p>}
                 </div>
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-primary mb-2">Message</label>
                   <textarea
                     id="message"
                     name="message"
-                    required
                     rows={5}
-                    className="w-full bg-background border border-border rounded-md px-4 py-2.5 text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-shadow resize-none"
+                    className={cn(inputClass("message"), "resize-none")}
                     placeholder="Your message..."
+                    onBlur={handleBlur}
+                    onChange={handleChange}
                   />
+                  {errors.message && touched.message && <p className="text-accent-rose text-xs mt-1.5">{errors.message}</p>}
                 </div>
                 <Button 
                   type="submit" 
@@ -108,7 +158,7 @@ export function Contact() {
                   ) : "Send Message"}
                 </Button>
                 {status === "error" && (
-                  <p className="text-red-500 text-sm mt-2 text-center">Failed to send message. Please try again or use direct email.</p>
+                  <p className="text-accent-rose text-sm mt-2 text-center">Failed to send message. Please try again or use direct email.</p>
                 )}
               </form>
             )}

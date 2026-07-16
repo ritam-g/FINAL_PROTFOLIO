@@ -10,6 +10,8 @@
     --color-border: #1e1e2e; /* subtle borders */
     --color-accent: #6366f1; /* primary accent */
     --color-accent-glow: #6366f133; /* accent glow */
+    --color-accent-amber: #f59e0b; /* warning/highlight */
+    --color-accent-rose: #f43f5e; /* error/alert */
     --color-text-primary: #f1f5f9; /* headings */
     --color-text-muted: #94a3b8; /* body text */
     --color-success: #22c55e; /* success color */
@@ -18,6 +20,18 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  /* Global Accessible Focus Outline */
+  *:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
   }
 
   body {

@@ -13,7 +13,7 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
         className={cn(
           "inline-flex items-center rounded-full px-3 py-1 text-xs font-medium transition-colors",
           {
-            "bg-surface text-muted border border-border": variant === "default",
+            "bg-surface text-muted border border-border-color": variant === "default",
             "bg-accent/10 text-accent border border-accent/20": variant === "accent",
             "bg-success/10 text-success border border-success/20": variant === "success"
           },

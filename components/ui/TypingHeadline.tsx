@@ -67,9 +67,8 @@ export function TypingHeadline({ phrases }: TypingHeadlineProps) {
       <span aria-hidden="true" className="text-accent relative inline-block">
         {text}
         <motion.span
-          initial={{ opacity: 1 }}
-          animate={{ opacity: 0 }}
-          transition={{ repeat: Infinity, duration: 0.8, ease: "steps(2)" }}
+          animate={{ opacity: [1, 1, 0, 0] }}
+          transition={{ repeat: Infinity, duration: 0.8, times: [0, 0.5, 0.5, 1] }}
           className="inline-block w-[4px] md:w-[6px] h-[0.9em] bg-accent ml-1 align-baseline -mb-[1px]"
         />
       </span>

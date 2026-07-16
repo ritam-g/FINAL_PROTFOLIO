@@ -33,14 +33,14 @@ export function Skills() {
             viewport={{ once: true }}
             transition={{ delay: idx * 0.1 }}
           >
-            <h3 className="text-lg font-bold text-primary mb-4 border-b border-border pb-2">
+            <h3 className="text-lg font-bold text-primary mb-4 border-b border-border-color pb-2">
               {category}
             </h3>
             <ul className="flex flex-wrap gap-2">
               {groupedSkills[category].map((skill) => (
                 <li
                   key={skill.name}
-                  className="bg-surface border border-border text-muted px-3 py-1.5 rounded-full text-sm font-medium hover:border-accent/50 hover:text-primary transition-colors"
+                  className="bg-surface border border-border-color text-muted px-3 py-1.5 rounded-full text-sm font-medium hover:border-accent/50 hover:text-primary transition-colors"
                 >
                   {skill.name}
                 </li>

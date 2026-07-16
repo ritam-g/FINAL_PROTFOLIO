@@ -15,9 +15,11 @@ module.exports = {
       colors: {
         background: "var(--color-bg)",
         surface: "var(--color-surface)",
-        border: "var(--color-border)",
+        "border-color": "var(--color-border)",
         accent: "var(--color-accent)",
         "accent-glow": "var(--color-accent-glow)",
+        "accent-amber": "var(--color-accent-amber)",
+        "accent-rose": "var(--color-accent-rose)",
         primary: "var(--color-text-primary)",
         muted: "var(--color-text-muted)",
         success: "var(--color-success)"

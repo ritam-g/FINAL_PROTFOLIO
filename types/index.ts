@@ -18,7 +18,7 @@ export interface Project {
 }
 
 export interface ExperienceEntry {
-  id: string;
+  id?: string;
   company: string;
   role: string;
   period: string;

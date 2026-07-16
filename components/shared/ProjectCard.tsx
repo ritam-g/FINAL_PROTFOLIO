@@ -45,10 +45,10 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-primary transition-colors"
+                  className="group/link hover:text-primary transition-colors p-1 -m-1"
                   aria-label={`View ${project.title} source code on GitHub`}
                 >
-                  <Github size={20} />
+                  <Github size={20} className="transition-transform duration-[150ms] group-hover/link:translate-x-[2px] group-hover/link:-translate-y-[2px]" />
                 </a>
               )}
               {project.liveUrl && (
@@ -56,10 +56,10 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-primary transition-colors"
+                  className="group/link hover:text-primary transition-colors p-1 -m-1"
                   aria-label={`View ${project.title} live project`}
                 >
-                  <ExternalLink size={20} />
+                  <ExternalLink size={20} className="transition-transform duration-[150ms] group-hover/link:translate-x-[2px] group-hover/link:-translate-y-[2px]" />
                 </a>
               )}
             </div>
@@ -82,7 +82,7 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
             {project.tech.map((tech) => (
               <span
                 key={tech}
-                className="text-xs font-mono text-muted/80 bg-surface border border-border px-2 py-1 rounded"
+                className="text-xs font-mono text-muted/80 bg-surface border border-border-color px-2 py-1 rounded"
               >
                 {tech}
               </span>

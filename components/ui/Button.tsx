@@ -33,11 +33,13 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const computedClassName = cn(
-      "inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:pointer-events-none disabled:opacity-50",
+      "relative inline-flex items-center justify-center rounded-md font-medium transition-all duration-200 hover:-translate-y-px active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50",
+      // Accessible 44x44 mobile touch target without altering visual size
+      "after:absolute after:top-1/2 after:left-1/2 after:h-[44px] after:w-[44px] after:-translate-x-1/2 after:-translate-y-1/2 md:after:hidden",
       {
         "bg-accent text-white hover:bg-accent/90": variant === "primary",
         "bg-surface text-primary hover:bg-surface/80": variant === "secondary",
-        "border border-border bg-transparent hover:bg-surface text-primary":
+        "border border-border-color bg-transparent hover:bg-surface text-primary":
           variant === "outline",
         "bg-transparent hover:bg-surface text-muted hover:text-primary":
           variant === "ghost",
