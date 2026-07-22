@@ -4,17 +4,17 @@
 
 @layer base {
   :root {
-    /* Colors */
-    --color-bg: #0a0a0f; /* near-black */
-    --color-surface: #111118; /* card backgrounds */
-    --color-border: #1e1e2e; /* subtle borders */
-    --color-accent: #6366f1; /* primary accent */
-    --color-accent-glow: #6366f133; /* accent glow */
-    --color-accent-amber: #f59e0b; /* warning/highlight */
-    --color-accent-rose: #f43f5e; /* error/alert */
-    --color-text-primary: #f1f5f9; /* headings */
-    --color-text-muted: #94a3b8; /* body text */
-    --color-success: #22c55e; /* success color */
+  /* Colors — Deep Green + Cream */
+  --color-bg: #0a0f0d;
+  --color-surface: #121815;
+  --color-border: #1e2622;
+  --color-accent: #7fb069;
+  --color-accent-glow: #7fb06933;
+  --color-accent-amber: #c9a227;
+  --color-accent-rose: #f43f5e;
+  --color-text-primary: #f2f0e8;
+  --color-text-muted: #9a9a8f;
+  --color-success: #7fb069;
   }
 
   html {
