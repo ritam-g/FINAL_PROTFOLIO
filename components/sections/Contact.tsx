@@ -73,98 +73,109 @@ export function Contact() {
   }
 
   const inputClass = (fieldName: keyof typeof errors) => cn(
-    "w-full bg-background border rounded-md px-4 py-2.5 text-primary transition-colors focus:outline-none focus:border-accent",
+    "bg-background px-4 py-2.5 border focus:border-accent rounded-md focus:outline-none w-full text-primary transition-colors",
     errors[fieldName] && touched[fieldName] ? "border-accent-rose focus:border-accent-rose" : "border-border-color"
   );
 
   return (
-    <SectionWrapper id="contact">
-      <SectionHeading title="Get In Touch" subtitle="Contact" />
-      
-      <div className="grid md:grid-cols-[1fr_2fr] gap-12">
-        <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-          <p className="text-muted mb-6 leading-relaxed">
-            I&apos;m currently open to new opportunities. Whether you have a question, a project idea, or just want to say hi, I&apos;ll try my best to get back to you!
-          </p>
-          <div className="text-sm text-accent mb-8 flex items-center gap-2 font-mono">
-            <span>Usually responds within 24 hours</span>
-          </div>
-          
-          <Button asChild variant="outline" className="w-full justify-start gap-3">
-            <a href={`mailto:${profile.email}`}>
-              <Mail size={18} />
-              {profile.email}
-            </a>
-          </Button>
-        </motion.div>
+  <SectionWrapper id="contact">
+    <SectionHeading title="Get In Touch" subtitle="Contact" />
 
-        <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ delay: 0.2 }}>
-          <Card className="p-6 md:p-8">
-            {status === "success" ? (
-              <div className="flex flex-col items-center justify-center py-12 text-center">
-                <CheckCircle2 size={48} className="text-success mb-4" />
-                <h3 className="text-xl font-bold text-primary mb-2">Message Sent!</h3>
-                <p className="text-muted mb-6">Thanks for reaching out. I&apos;ll get back to you soon.</p>
-                <Button onClick={() => setStatus("idle")}>Send Another</Button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-primary mb-2">Name</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    className={inputClass("name")}
-                    placeholder="John Doe"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                  />
-                  {errors.name && touched.name && <p className="text-accent-rose text-xs mt-1.5">{errors.name}</p>}
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-primary mb-2">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className={inputClass("email")}
-                    placeholder="john@example.com"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                  />
-                  {errors.email && touched.email && <p className="text-accent-rose text-xs mt-1.5">{errors.email}</p>}
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-primary mb-2">Message</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={5}
-                    className={cn(inputClass("message"), "resize-none")}
-                    placeholder="Your message..."
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                  />
-                  {errors.message && touched.message && <p className="text-accent-rose text-xs mt-1.5">{errors.message}</p>}
-                </div>
-                <Button 
-                  type="submit" 
-                  disabled={status === "loading"}
-                  className="w-full"
-                >
-                  {status === "loading" ? (
-                    <><Loader2 size={18} className="animate-spin mr-2" /> Sending...</>
-                  ) : "Send Message"}
-                </Button>
-                {status === "error" && (
-                  <p className="text-accent-rose text-sm mt-2 text-center">Failed to send message. Please try again or use direct email.</p>
-                )}
-              </form>
+    <div className="grid md:grid-cols-[1fr_2fr] border border-border-color divide-border-color rounded-2xl md:divide-x divide-y md:divide-y-0 overflow-hidden">
+
+      {/* LEFT PANE */}
+      <motion.div
+        variants={fadeInUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="flex flex-col justify-center bg-background p-8 md:p-10"
+      >
+        <p className="mb-6 text-muted leading-relaxed">
+          I&apos;m currently open to new opportunities. Whether you have a question, a project idea, or just want to say hi, I&apos;ll try my best to get back to you!
+        </p>
+        <div className="flex items-center gap-2 mb-8 font-mono text-accent text-sm">
+          <span>Usually responds within 24 hours</span>
+        </div>
+
+        <Button asChild variant="outline" className="justify-start gap-3 w-full">
+          <a href={`mailto:${profile.email}`}>
+            <Mail size={18} />
+            {profile.email}
+          </a>
+        </Button>
+      </motion.div>
+
+      {/* RIGHT PANE (form) */}
+      <motion.div
+        variants={fadeInUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        transition={{ delay: 0.2 }}
+        className="bg-background p-6 md:p-8"
+      >
+        {status === "success" ? (
+          <div className="flex flex-col justify-center items-center py-12 h-full text-center">
+            <CheckCircle2 size={48} className="mb-4 text-success" />
+            <h3 className="mb-2 font-bold text-primary text-xl">Message Sent!</h3>
+            <p className="mb-6 text-muted">Thanks for reaching out. I&apos;ll get back to you soon.</p>
+            <Button onClick={() => setStatus("idle")}>Send Another</Button>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+            <div>
+              <label htmlFor="name" className="block mb-2 font-medium text-primary text-sm">Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                className={inputClass("name")}
+                placeholder="John Doe"
+                onBlur={handleBlur}
+                onChange={handleChange}
+              />
+              {errors.name && touched.name && <p className="mt-1.5 text-xs text-accent-rose">{errors.name}</p>}
+            </div>
+            <div>
+              <label htmlFor="email" className="block mb-2 font-medium text-primary text-sm">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                className={inputClass("email")}
+                placeholder="john@example.com"
+                onBlur={handleBlur}
+                onChange={handleChange}
+              />
+              {errors.email && touched.email && <p className="mt-1.5 text-xs text-accent-rose">{errors.email}</p>}
+            </div>
+            <div>
+              <label htmlFor="message" className="block mb-2 font-medium text-primary text-sm">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                rows={5}
+                className={cn(inputClass("message"), "resize-none")}
+                placeholder="Your message..."
+                onBlur={handleBlur}
+                onChange={handleChange}
+              />
+              {errors.message && touched.message && <p className="mt-1.5 text-xs text-accent-rose">{errors.message}</p>}
+            </div>
+            <Button type="submit" disabled={status === "loading"} className="w-full">
+              {status === "loading" ? (
+                <><Loader2 size={18} className="mr-2 animate-spin" /> Sending...</>
+              ) : "Send Message"}
+            </Button>
+            {status === "error" && (
+              <p className="mt-2 text-sm text-center text-accent-rose">Failed to send message. Please try again or use direct email.</p>
             )}
-          </Card>
-        </motion.div>
-      </div>
-    </SectionWrapper>
+          </form>
+        )}
+      </motion.div>
+
+    </div>
+  </SectionWrapper>
   );
 }
