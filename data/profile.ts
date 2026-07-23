@@ -10,5 +10,6 @@ export const profile: Profile = {
   linkedin: "https://www.linkedin.com/in/ritammaty/",
   leetcode: "https://leetcode.com/u/ritammaty/",
   githubUsername: "ritam-g",
-  location: "hyderabad, in"
+  location: "hyderabad, in",
+  now: "Currently exploring distributed systems & open-source contributions",
 };

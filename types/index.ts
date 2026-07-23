@@ -44,4 +44,5 @@ export interface Profile {
   leetcode: string;
   githubUsername: string;
   location: string;
+  now?: string;
 }

@@ -124,6 +124,15 @@ export function Contact() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+            {/* Honeypot: hidden from real users, catches bots that auto-fill all fields */}
+            <input
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              className="absolute left-[-9999px]"
+            />
             <div>
               <label htmlFor="name" className="block mb-2 font-medium text-primary text-sm">Name</label>
               <input
