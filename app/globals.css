@@ -4,17 +4,27 @@
 
 @layer base {
   :root {
-  /* Colors — Warm Mono + Burnt Orange */
-  --color-bg: #0c0c0d;
-  --color-surface: #161616;
-  --color-border: #232323;
-  --color-accent: #ff5f1f;
-  --color-accent-glow: #ff5f1f33;
-  --color-accent-amber: #f0a830;
-  --color-accent-rose: #f43f5e;
-  --color-text-primary: #f5f4f2;
-  --color-text-muted: #8a8a86;
-  --color-success: #7fb069;
+    /* Colors — Deep Green + Cream */
+    --color-bg: #0a0f0d;
+    --color-surface: #121815;
+    --color-border: #1e2622;
+    --color-accent: #7fb069;
+    --color-accent-glow: #7fb06933;
+    --color-accent-amber: #c9a227;
+    --color-accent-rose: #f43f5e;
+    --color-text-primary: #f2f0e8;
+    --color-text-muted: #9a9a8f;
+    --color-success: #7fb069;
+
+    /* Aliases for direct CSS custom property usage */
+    --bg: var(--color-bg);
+    --bg-elevated: var(--color-surface);
+    --border: var(--color-border);
+    --text: var(--color-text-primary);
+    --text-dim: var(--color-text-muted);
+    --accent-green: var(--color-accent);
+    --accent-amber: var(--color-accent-amber);
+    --accent-rose: var(--color-accent-rose);
   }
 
   html {
@@ -39,7 +49,7 @@
   }
 
   ::selection {
-    background: rgba(99, 102, 241, 0.3);
+    background: var(--color-accent-glow);
     color: var(--color-text-primary);
   }
 

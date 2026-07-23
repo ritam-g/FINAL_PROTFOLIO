@@ -7,6 +7,7 @@ import { useActiveSection } from "@/hooks/useActiveSection";
 import { cn } from "@/lib/utils/cn";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { Magnetic } from "@/components/ui/Magnetic";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -83,11 +84,13 @@ export function Navbar() {
               );
             })}
           </ul>
-          <Button asChild variant="outline" size="sm">
-            <a href="/resume.pdf" download>
-              Resume
-            </a>
-          </Button>
+          <Magnetic>
+            <Button asChild variant="outline" size="sm">
+              <a href="/resume.pdf" download>
+                Resume
+              </a>
+            </Button>
+          </Magnetic>
         </nav>
 
         {/* Mobile Menu Toggle */}

@@ -3,8 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowDown, Github, Linkedin, Mail, Code2 } from "lucide-react";
 import { profile } from "@/data/profile";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
+import { Button, Badge, Magnetic } from "@/components/ui";
 import { TypingHeadline } from "@/components/ui/TypingHeadline";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { fadeInUp, staggerContainer } from "@/lib/utils/animations";
@@ -30,11 +29,17 @@ export function Hero() {
         animate="visible"
         className="max-w-3xl"
       >
-        <motion.div variants={itemVariants} className="flex items-center gap-4 mb-6">
-          <Badge variant="success" className="slide-in-from-bottom-2 animate-in duration-700 fade-in">
-            <span className="bg-success shadow-[0_0_8px_rgba(34,197,94,0.8)] mr-1.5 rounded-full w-2 h-2 animate-pulse" />
+        <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-6">
+          <Badge variant="success" className="slide-in-from-bottom-2 animate-in duration-700 fade-in whitespace-nowrap">
+            <span className="bg-success shadow-[0_0_8px_rgba(34,197,94,0.8)] mr-1.5 rounded-full w-2 h-2 animate-pulse flex-shrink-0" />
             Open to opportunities
           </Badge>
+          {profile.now && (
+            <Badge variant="accent" className="slide-in-from-bottom-2 animate-in duration-700 fade-in delay-100 font-normal max-w-full text-left">
+              <span className="bg-accent shadow-[0_0_8px_rgba(99,102,241,0.8)] mr-1.5 rounded-full w-2 h-2 flex-shrink-0" />
+              <span className="truncate sm:whitespace-normal">{profile.now}</span>
+            </Badge>
+          )}
         </motion.div>
 
         <motion.h1 variants={itemVariants} className="mb-6 font-bold text-primary text-5xl md:text-7xl lg:text-8xl tracking-tighter">
@@ -50,14 +55,18 @@ export function Hero() {
         </motion.p>
 
         <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-4 mb-12">
-          <Button asChild size="lg">
-            <a href="#projects">View Projects</a>
-          </Button>
-          <Button asChild variant="outline" size="lg">
-            <a href="/resume.pdf" download>
-              Download Resume
-            </a>
-          </Button>
+          <Magnetic>
+            <Button asChild size="lg">
+              <a href="#projects">View Projects</a>
+            </Button>
+          </Magnetic>
+          <Magnetic>
+            <Button asChild variant="outline" size="lg">
+              <a href="/resume.pdf" download>
+                Download Resume
+              </a>
+            </Button>
+          </Magnetic>
         </motion.div>
 
         <motion.div variants={itemVariants} className="flex items-center gap-6 text-muted">
