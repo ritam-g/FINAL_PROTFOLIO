@@ -36,7 +36,7 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "top-0 right-0 left-0 z-50 fixed transition-all duration-300",
         isScrolled
           ? "bg-background/80 backdrop-blur-md border-b border-border-color py-4"
           : "bg-transparent py-6"
@@ -44,12 +44,12 @@ export function Navbar() {
     >
       {/* Scroll Progress Bar */}
       <motion.div
-        className="absolute top-0 left-0 right-0 h-[2px] bg-accent origin-left z-50"
+        className="top-0 right-0 left-0 z-50 absolute bg-accent h-[2px] origin-left"
         style={{ scaleX }}
       />
 
-      <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
-        <a href="#hero" className="font-heading font-bold text-xl tracking-tighter text-primary">
+      <div className="flex justify-between items-center mx-auto px-6 max-w-6xl">
+        <a href="#hero" className="font-heading font-bold text-primary text-xl tracking-tighter">
           RM.
         </a>
 
@@ -65,7 +65,7 @@ export function Navbar() {
                   <a
                     href={item.href}
                     className={cn(
-                      "text-sm font-medium transition-colors duration-[150ms] hover:text-primary py-2",
+                      "py-2 font-medium hover:text-primary text-sm transition-colors duration-[150ms]",
                       isActive ? "text-accent" : "text-muted"
                     )}
                   >
@@ -74,7 +74,7 @@ export function Navbar() {
                   {isActive && (
                     <motion.div
                       layoutId="nav-indicator"
-                      className="absolute -bottom-1 left-0 right-0 h-[2px] bg-accent rounded-full"
+                      className="right-0 -bottom-1 left-0 absolute bg-accent rounded-full h-[2px]"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.3, ease: "easeOut" }}
@@ -86,7 +86,7 @@ export function Navbar() {
           </ul>
           <Magnetic>
             <Button asChild variant="outline" size="sm">
-              <a href="/resume.pdf" download>
+              <a href="/RESUME.pdf" download>
                 Resume
               </a>
             </Button>
@@ -95,7 +95,7 @@ export function Navbar() {
 
         {/* Mobile Menu Toggle */}
         <button
-          className="md:hidden p-2 -mr-2 text-muted hover:text-primary transition-colors duration-[150ms] relative after:absolute after:inset-0 after:min-h-[44px] after:min-w-[44px] after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2"
+          className="md:hidden after:top-1/2 after:left-1/2 after:absolute relative after:inset-0 -mr-2 p-2 after:min-w-[44px] after:min-h-[44px] text-muted hover:text-primary transition-colors after:-translate-x-1/2 after:-translate-y-1/2 duration-[150ms]"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
         >
@@ -105,7 +105,7 @@ export function Navbar() {
 
       {/* Mobile Nav Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-surface border-b border-border-color shadow-lg py-4 px-6 flex flex-col gap-4">
+        <div className="md:hidden top-full right-0 left-0 absolute flex flex-col gap-4 bg-surface shadow-lg px-6 py-4 border-border-color border-b">
           <ul className="flex flex-col gap-4">
             {navigation.map((item) => {
               const id = item.href.replace("#", "");
@@ -117,7 +117,7 @@ export function Navbar() {
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
                     className={cn(
-                      "text-base font-medium transition-colors block py-2 border-b border-border-color/50",
+                      "block py-2 border-border-color/50 border-b font-medium text-base transition-colors",
                       isActive ? "text-accent" : "text-muted"
                     )}
                   >
@@ -127,7 +127,7 @@ export function Navbar() {
               );
             })}
           </ul>
-          <Button asChild variant="primary" size="sm" className="w-full mt-2">
+          <Button asChild variant="primary" size="sm" className="mt-2 w-full">
             <a href="/resume.pdf" download onClick={() => setMobileMenuOpen(false)}>
               Download Resume
             </a>
