@@ -62,7 +62,7 @@ export function Hero() {
           </Magnetic>
           <Magnetic>
             <Button asChild variant="outline" size="lg">
-              <a href="/resume.pdf" download>
+              <a href="/RESUME.pdf" download>
                 Download Resume
               </a>
             </Button>
