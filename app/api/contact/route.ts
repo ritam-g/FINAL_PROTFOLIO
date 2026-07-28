@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
+export const dynamic = "force-dynamic";
+
 // ---------------------------------------------------------------------------
 // In-memory rate limiter
 // NOTE: This resets on every server restart and is NOT shared across multiple

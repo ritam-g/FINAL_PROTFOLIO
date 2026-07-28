@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Space_Grotesk, Inter, JetBrains_Mono } from 'next/font/google'
 import { IntroProvider } from '@/lib/hooks/useIntroComplete'
+import { profile } from '@/data/profile'
 import './globals.css'
 
 /* ─── Font configuration ─────────────────────────────────────────────────────── */
@@ -29,7 +30,11 @@ const jetbrainsMono = JetBrains_Mono({
 /* ─── Page metadata ──────────────────────────────────────────────────────────── */
 
 export const metadata: Metadata = {
-  title: 'Ritam Maty — Backend & Full-Stack Engineer',
+  metadataBase: new URL('https://final-protfolio-ruddy.vercel.app'),
+  title: {
+    default: 'Ritam Maty — Backend & Full-Stack Engineer',
+    template: '%s | Ritam Maty',
+  },
   description:
     'Backend and Full-Stack Engineer specializing in distributed systems, AI/LLM applications, and cloud-native microservices. Open to opportunities.',
   keywords: [
@@ -42,19 +47,34 @@ export const metadata: Metadata = {
     'LangChain',
     'Kubernetes',
   ],
-  authors: [{ name: 'Ritam Maty', url: 'https://ritam-portfolio.vercel.app' }],
+  authors: [{ name: 'Ritam Maty', url: 'https://final-protfolio-ruddy.vercel.app' }],
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     title: 'Ritam Maty — Backend & Full-Stack Engineer',
     description: 'Building production-grade APIs, RAG pipelines, and cloud-native systems.',
-    url: 'https://ritam-portfolio.vercel.app',
+    url: 'https://final-protfolio-ruddy.vercel.app',
+    siteName: 'Ritam Maty — Portfolio',
+    locale: 'en_US',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Ritam Maty — Backend & Full-Stack Engineer',
+    description: 'Building production-grade APIs, RAG pipelines, and cloud-native systems.',
+    images: ['/og-image.png'],
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+    },
+  },
 }
 
 /* ─── Root layout ────────────────────────────────────────────────────────────── */
@@ -62,11 +82,31 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: profile.name,
+    jobTitle: 'Backend & Full-Stack Engineer',
+    url: 'https://final-protfolio-ruddy.vercel.app',
+    sameAs: [
+      profile.linkedin,
+      profile.github,
+      profile.leetcode,
+    ].filter(Boolean),
+    email: `mailto:${profile.email}`,
+  }
+
   return (
     <html
       lang="en"
       className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="bg-background text-muted antialiased relative">
         <a
           href="#main"
