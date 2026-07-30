@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDown, Github, Linkedin, Mail, Code2 } from "lucide-react";
+import { ArrowDown, Github, Linkedin, Code2 } from "lucide-react";
 import { profile } from "@/data/profile";
-import { Button, Badge, Magnetic } from "@/components/ui";
+import { Button, Badge, Magnetic, CopyEmailButton } from "@/components/ui";
 import { TypingHeadline } from "@/components/ui/TypingHeadline";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { fadeInUp, staggerContainer } from "@/lib/utils/animations";
@@ -79,9 +79,7 @@ export function Hero() {
           <a href={profile.leetcode} target="_blank" rel="noopener noreferrer" className="-m-2 p-2 hover:text-primary hover:scale-110 active:scale-95 transition-all duration-200" aria-label="LeetCode">
             <Code2 size={24} />
           </a>
-          <a href={`mailto:${profile.email}`} className="-m-2 p-2 hover:text-primary hover:scale-110 active:scale-95 transition-all duration-200" aria-label="Email">
-            <Mail size={24} />
-          </a>
+          <CopyEmailButton email={profile.email} variant="icon-only" className="-m-2 p-2 hover:text-primary hover:scale-110 active:scale-95 transition-all duration-200" />
         </motion.div>
       </motion.div>
 

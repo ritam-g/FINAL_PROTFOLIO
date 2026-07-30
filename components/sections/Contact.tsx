@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Loader2, CheckCircle2 } from "lucide-react";
+import { Loader2, CheckCircle2 } from "lucide-react";
 import { profile } from "@/data/profile";
 import { SectionWrapper } from "@/components/layout/SectionWrapper";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { CopyEmailButton } from "@/components/ui/CopyEmailButton";
 import { fadeInUp } from "@/lib/utils/animations";
 import { cn } from "@/lib/utils/cn";
 
@@ -98,12 +99,11 @@ export function Contact() {
           <span>Usually responds within 24 hours</span>
         </div>
 
-        <Button asChild variant="outline" className="justify-start gap-3 w-full">
-          <a href={`mailto:${profile.email}`}>
-            <Mail size={18} />
-            {profile.email}
-          </a>
-        </Button>
+        <CopyEmailButton
+          email={profile.email}
+          variant="full"
+          className="w-full"
+        />
       </motion.div>
 
       {/* RIGHT PANE (form) */}

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Space_Grotesk, Inter, JetBrains_Mono } from 'next/font/google'
 import { IntroProvider } from '@/lib/hooks/useIntroComplete'
 import { profile } from '@/data/profile'
+import { ClientEffects } from '@/components/ui/ClientEffects'
 import './globals.css'
 
 /* ─── Font configuration ─────────────────────────────────────────────────────── */
@@ -108,6 +109,7 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-background text-muted antialiased relative">
+        <ClientEffects />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-accent focus:text-white focus:rounded"
