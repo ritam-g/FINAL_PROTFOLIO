@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { useIntroComplete } from '@/lib/hooks/useIntroComplete'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
-import { Hero, About, Experience, Projects, Skills, Contact } from '@/components/sections'
+import { Hero, About, Experience, Projects, Skills, Contact, Certifications } from '@/components/sections'
 import TraceLine from '@/components/sections/TraceLine'
 
 // SSR disabled — IntroLoader uses sessionStorage + browser APIs
@@ -45,6 +45,7 @@ export default function Home() {
           </div>
           <Projects />
           <Skills />
+          <Certifications />
           {/* Divider 3: Skills → Contact — signals the contact API pipeline */}
           <div className="max-w-6xl mx-auto px-6 py-2">
             <TraceLine nodes={DIVIDER_NODES_3} />

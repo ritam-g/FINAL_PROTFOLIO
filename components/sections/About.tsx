@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { SectionWrapper } from "@/components/layout/SectionWrapper";
 import { SectionHeading } from "@/components/shared/SectionHeading";
+import { CountUp } from "@/components/ui";
 import { fadeInUp } from "@/lib/utils/animations";
 
 export function About() {
@@ -24,10 +25,16 @@ export function About() {
           
           <div className="flex flex-wrap gap-4 text-sm">
             <div className="bg-surface px-4 py-2 border border-border-color rounded-md">
-              <span className="font-bold text-accent">2+</span> Projects in Production
+              <span className="font-bold text-accent">
+                <CountUp end={2} suffix="+" />
+              </span>{" "}
+              Projects in Production
             </div>
             <div className="bg-surface px-4 py-2 border border-border-color rounded-md">
-              <span className="font-bold text-accent">3+</span> AI Systems Built
+              <span className="font-bold text-accent">
+                <CountUp end={3} suffix="+" />
+              </span>{" "}
+              AI Systems Built
             </div>
             <div className="flex items-center gap-2 bg-surface px-4 py-2 border border-border-color rounded-md font-medium text-primary">
               <span className="bg-success rounded-full w-2 h-2 animate-pulse" />

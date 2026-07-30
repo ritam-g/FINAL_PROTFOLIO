@@ -6,3 +6,5 @@ export * from "./CursorSpotlight";
 export * from "./Magnetic";
 export * from "./ScrollProgress";
 export * from "./TypingHeadline";
+export * from "./CountUp";
+export * from "./ClientEffects";
