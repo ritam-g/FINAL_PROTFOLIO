@@ -1,45 +1,42 @@
-"use client";
+'use client'
 
-import { motion } from "framer-motion";
-import { ExternalLink, Github } from "lucide-react";
-import { Project } from "@/types";
-import { cardHover, fadeInUp } from "@/lib/utils/animations";
-import { Card } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
-import { cn } from "@/lib/utils/cn";
+import { motion } from 'framer-motion'
+import { ExternalLink, Github } from 'lucide-react'
+import { Project } from '@/types'
+import { cardHover, fadeInUp } from '@/lib/utils/animations'
+import { Card } from '@/components/ui/Card'
+import { Badge } from '@/components/ui/Badge'
+import { cn } from '@/lib/utils/cn'
 
 interface ProjectCardProps {
-  project: Project;
-  className?: string;
+  project: Project
+  className?: string
 }
 
 export function ProjectCard({ project, className }: ProjectCardProps) {
   return (
-    <motion.div variants={fadeInUp} className={cn("h-full", className)}>
+    <motion.div variants={fadeInUp} className={cn('h-full', className)}>
       <motion.div
         variants={cardHover}
         initial="rest"
         whileHover="hover"
         className="h-full"
       >
-        <Card className="h-full flex flex-col p-6 transition-colors hover:border-accent/50 group overflow-hidden relative">
-          {/* subtle hover glow */}
-          <div className="absolute inset-0 bg-accent-glow opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none" />
+        <Card className="h-full flex flex-col p-6 transition-colors hover:border-accent/60 group overflow-hidden relative">
+          {/* Glow on hover */}
+          <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
+          {/* Header: title + links */}
           <div className="flex justify-between items-start mb-4 relative z-10">
             <div>
-              <h3 className="text-xl font-bold text-primary mb-2">
-                {project.title}
-              </h3>
+              <h3 className="text-xl font-bold text-primary mb-2">{project.title}</h3>
               <div className="flex flex-wrap gap-2 mb-4">
                 {project.tags.map((tag) => (
-                  <Badge key={tag} variant="accent">
-                    {tag}
-                  </Badge>
+                  <Badge key={tag} variant="accent">{tag}</Badge>
                 ))}
               </div>
             </div>
-            <div className="flex gap-3 text-muted">
+            <div className="flex gap-3 text-muted flex-shrink-0">
               {project.githubUrl && (
                 <a
                   href={project.githubUrl}
@@ -48,7 +45,10 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
                   className="group/link hover:text-primary transition-colors p-1 -m-1"
                   aria-label={`View ${project.title} source code on GitHub`}
                 >
-                  <Github size={20} className="transition-transform duration-[150ms] group-hover/link:translate-x-[2px] group-hover/link:-translate-y-[2px]" />
+                  <Github
+                    size={20}
+                    className="transition-transform duration-150 group-hover/link:translate-x-[2px] group-hover/link:-translate-y-[2px]"
+                  />
                 </a>
               )}
               {project.liveUrl && (
@@ -57,39 +57,68 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group/link hover:text-primary transition-colors p-1 -m-1"
-                  aria-label={`View ${project.title} live project`}
+                  aria-label={`View ${project.title} live demo`}
                 >
-                  <ExternalLink size={20} className="transition-transform duration-[150ms] group-hover/link:translate-x-[2px] group-hover/link:-translate-y-[2px]" />
+                  <ExternalLink
+                    size={20}
+                    className="transition-transform duration-150 group-hover/link:translate-x-[2px] group-hover/link:-translate-y-[2px]"
+                  />
                 </a>
               )}
             </div>
           </div>
 
-          <p className="text-muted text-sm leading-relaxed mb-6 relative z-10">
-            {project.description}
-          </p>
+          {/* Description */}
+          <p className="text-muted text-sm leading-relaxed mb-5 relative z-10">{project.description}</p>
 
-          <ul className="space-y-2 mb-6 relative z-10 flex-grow">
+          {/* Highlights */}
+          <ul className="space-y-2 mb-5 relative z-10 flex-grow">
             {project.highlights.map((highlight, i) => (
               <li key={i} className="text-sm text-muted flex gap-2 items-start">
-                <span className="text-accent mt-1 text-[10px]">▶</span>
+                <span className="text-accent mt-1 text-[9px]">▶</span>
                 <span>{highlight}</span>
               </li>
             ))}
           </ul>
 
+          {/* Tech stack pills */}
           <div className="flex flex-wrap gap-2 mt-auto relative z-10">
             {project.tech.map((tech) => (
               <span
                 key={tech}
-                className="text-xs font-mono text-muted/80 bg-surface border border-border-color px-2 py-1 rounded"
+                className="text-xs font-mono text-muted/80 bg-surface border border-border-color px-2 py-1 rounded hover:border-accent/40 hover:text-muted transition-colors duration-150"
               >
                 {tech}
               </span>
             ))}
           </div>
+
+          {/* Health-check footer — appears on hover via clip-path reveal */}
+          <div
+            className="relative z-10 mt-4 pt-3 border-t border-border-color/50 overflow-hidden"
+            style={{ height: 0 }}
+          >
+            {/* This is revealed via group-hover CSS — lightweight CSS-only approach */}
+          </div>
+
+          {/* Status footer line — clip-path revealed on hover */}
+          <div
+            className="absolute bottom-0 left-0 right-0 px-6 py-2.5 flex items-center justify-between
+                       translate-y-full group-hover:translate-y-0
+                       transition-transform duration-300 ease-out
+                       bg-surface-2 border-t border-border-color/60 z-20"
+          >
+            <span className="font-mono text-[10px] text-accent">200 OK</span>
+            <span className="font-mono text-[10px] text-fog">
+              deployed · {project.tech[0]}
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+              <span className="font-mono text-[10px] text-accent">live</span>
+            </span>
+          </div>
         </Card>
       </motion.div>
     </motion.div>
-  );
+  )
 }

@@ -17,10 +17,11 @@ interface TraceLineProps {
 
 /**
  * The signature animated trace/node element.
- * A thin horizontal line with a glowing green dot that travels across it,
+ * A thin horizontal line with a glowing dot (--color-signal) that travels across it,
  * plus monospaced node labels below.
  *
- * Used in both Hero and Contact sections with different node arrays.
+ * Used between sections with contextually themed node arrays.
+ * Colour is driven by CSS custom properties — updated in globals.css to use --color-signal.
  */
 export default function TraceLine({ nodes }: TraceLineProps) {
   const containerRef = useRef<HTMLDivElement>(null);

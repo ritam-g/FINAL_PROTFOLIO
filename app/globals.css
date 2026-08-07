@@ -4,27 +4,34 @@
 
 @layer base {
   :root {
-    /* Colors — Deep Green + Cream */
-    --color-bg: #0a0f0d;
-    --color-surface: #121815;
-    --color-border: #1e2622;
-    --color-accent: #7fb069;
-    --color-accent-glow: #7fb06933;
-    --color-accent-amber: #c9a227;
-    --color-accent-rose: #f43f5e;
-    --color-text-primary: #f2f0e8;
-    --color-text-muted: #9a9a8f;
-    --color-success: #7fb069;
+    /* ── Palette ─────────────────────────────────────────────────────────────── */
+    --color-ink:          #08100D;   /* true background — almost black, faint green cast */
+    --color-surface:      #101A15;   /* card / panel surface */
+    --color-surface-2:    #172110;   /* elevated: hover bg, status card bg */
+    --color-border:       #1F2D24;   /* hairline borders */
+    --color-border-bright:#2E4535;   /* hover-state borders */
 
-    /* Aliases for direct CSS custom property usage */
-    --bg: var(--color-bg);
-    --bg-elevated: var(--color-surface);
-    --border: var(--color-border);
-    --text: var(--color-text-primary);
-    --text-dim: var(--color-text-muted);
-    --accent-green: var(--color-accent);
-    --accent-amber: var(--color-accent-amber);
-    --accent-rose: var(--color-accent-rose);
+    --color-signal:       #5CDB95;   /* primary accent — terminal green (approved) */
+    --color-signal-dim:   #3A9162;   /* secondary accent, tags, underlines */
+    --color-signal-glow:  #5CDB9522; /* glow backing */
+
+    --color-stone:        #F0EDE4;   /* primary text — warm off-white */
+    --color-fog:          #7E8D86;   /* muted text — desaturated mid-green-grey */
+
+    --color-ember:        #E8B566;   /* amber — CTA contrast accent */
+    --color-fault:        #E25858;   /* error / destructive */
+
+    --color-success:      #5CDB95;   /* alias: same as signal */
+
+    /* ── Semantic aliases ────────────────────────────────────────────────────── */
+    --bg:           var(--color-ink);
+    --bg-elevated:  var(--color-surface);
+    --border:       var(--color-border);
+    --text:         var(--color-stone);
+    --text-dim:     var(--color-fog);
+    --accent-green: var(--color-signal);
+    --accent-amber: var(--color-ember);
+    --accent-rose:  var(--color-fault);
   }
 
   html {
@@ -36,21 +43,30 @@
     html {
       scroll-behavior: auto;
     }
+    /* Collapse all CSS-driven animations globally */
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 
   /* Global Accessible Focus Outline */
   *:focus-visible {
-    outline: 2px solid var(--color-accent);
+    outline: 2px solid var(--color-signal);
     outline-offset: 2px;
   }
 
   body {
-    @apply bg-background min-h-screen font-sans text-muted antialiased;
+    @apply bg-background min-h-screen font-sans antialiased;
+    color: var(--color-fog);
   }
 
   ::selection {
-    background: var(--color-accent-glow);
-    color: var(--color-text-primary);
+    background: var(--color-signal-glow);
+    color: var(--color-stone);
   }
 
   h1,
@@ -59,7 +75,8 @@
   h4,
   h5,
   h6 {
-    @apply font-heading text-primary tracking-tight;
+    @apply font-heading tracking-tight;
+    color: var(--color-stone);
   }
 }
 
@@ -70,19 +87,15 @@
 }
 
 /* ─── Cursor Spotlight ───────────────────────────────────────────────────────── */
-/*
- * Only rendered on true pointer devices. On touch devices the element is hidden
- * via CSS so the JS listener (already gated by useReducedMotion) never matters.
- */
 .cursor-spotlight {
-  display: none; /* hidden by default — only shown on pointer devices below */
+  display: none;
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
   background: radial-gradient(
     600px circle at var(--x, -9999px) var(--y, -9999px),
-    rgba(127, 176, 105, 0.05),
+    rgba(92, 219, 149, 0.04),
     transparent 40%
   );
 }
@@ -98,17 +111,17 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--accent-green);
-  box-shadow: 0 0 0 0 rgba(127, 176, 105, 0.5);
-  animation: pulse 2s infinite;
+  background: var(--color-signal);
+  box-shadow: 0 0 0 0 rgba(92, 219, 149, 0.5);
+  animation: pulse-dot 2s infinite;
   flex-shrink: 0;
   display: inline-block;
 }
 
-@keyframes pulse {
-  0%   { box-shadow: 0 0 0 0   rgba(127, 176, 105, 0.45); }
-  70%  { box-shadow: 0 0 0 6px rgba(127, 176, 105, 0);    }
-  100% { box-shadow: 0 0 0 0   rgba(127, 176, 105, 0);    }
+@keyframes pulse-dot {
+  0%   { box-shadow: 0 0 0 0   rgba(92, 219, 149, 0.45); }
+  70%  { box-shadow: 0 0 0 6px rgba(92, 219, 149, 0);    }
+  100% { box-shadow: 0 0 0 0   rgba(92, 219, 149, 0);    }
 }
 
 /* ─── Trace line + traveling dot ────────────────────────────────────────────── */
@@ -118,8 +131,8 @@
   background: linear-gradient(
     90deg,
     transparent,
-    var(--border) 15%,
-    var(--border) 85%,
+    var(--color-border) 15%,
+    var(--color-border) 85%,
     transparent
   );
   overflow: visible;
@@ -133,10 +146,10 @@
   width: 6px;
   height: 5px;
   border-radius: 50%;
-  background: var(--accent-green);
+  background: var(--color-signal);
   filter: blur(0.3px);
   animation: travel 4.5s linear infinite;
-  box-shadow: 0 0 8px 1px var(--color-accent-glow);
+  box-shadow: 0 0 8px 1px var(--color-signal-glow);
 }
 
 @keyframes travel {
@@ -152,4 +165,113 @@
   font-size: 10px;
   letter-spacing: 0.05em;
   color: var(--text-dim);
+}
+
+/* ─── System Status Card (Hero health-check panel) ───────────────────────────── */
+.status-card {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border-bright);
+  border-radius: 8px;
+  font-family: var(--font-jetbrains-mono), monospace;
+  overflow: hidden;
+}
+
+.status-card-header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--color-fog);
+  letter-spacing: 0.04em;
+}
+
+.status-card-header .status-200 {
+  color: var(--color-signal);
+  font-weight: 600;
+}
+
+.status-card-body {
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.status-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.status-key {
+  color: var(--color-fog);
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.status-value {
+  color: var(--color-stone);
+  flex: 1;
+}
+
+.status-tag {
+  display: inline-flex;
+  align-items: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-bright);
+  border-radius: 4px;
+  padding: 1px 7px;
+  font-size: 11px;
+  color: var(--color-signal);
+  letter-spacing: 0.03em;
+  margin-right: 4px;
+  margin-bottom: 2px;
+}
+
+.status-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(92, 219, 149, 0.08);
+  border: 1px solid rgba(92, 219, 149, 0.25);
+  border-radius: 4px;
+  padding: 4px 10px;
+  color: var(--color-signal);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ─── Skill connector grid ───────────────────────────────────────────────────── */
+.skill-category-group {
+  position: relative;
+}
+
+/* Horizontal connector line between skill category headers — desktop only */
+@media (min-width: 768px) {
+  .skill-category-group::after {
+    content: '';
+    position: absolute;
+    top: 14px;
+    right: -1rem;
+    width: 2rem;
+    height: 1px;
+    background: linear-gradient(90deg, var(--color-border-bright), transparent);
+    pointer-events: none;
+  }
+
+  .skill-category-group:last-child::after {
+    display: none;
+  }
+}
+
+/* ─── Clip-path reveal utility ───────────────────────────────────────────────── */
+.clip-reveal {
+  clip-path: inset(0 100% 0 0);
 }

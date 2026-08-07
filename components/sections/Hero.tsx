@@ -1,100 +1,205 @@
-"use client";
+'use client'
 
-import { motion } from "framer-motion";
-import { ArrowDown, Github, Linkedin, Code2 } from "lucide-react";
-import { profile } from "@/data/profile";
-import { Button, Badge, Magnetic, CopyEmailButton } from "@/components/ui";
-import { TypingHeadline } from "@/components/ui/TypingHeadline";
-import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { fadeInUp, staggerContainer } from "@/lib/utils/animations";
+import dynamic from 'next/dynamic'
+import { motion } from 'framer-motion'
+import { ArrowDown, Github, Linkedin, Code2 } from 'lucide-react'
+import { profile } from '@/data/profile'
+import { Button, Badge, Magnetic, CopyEmailButton } from '@/components/ui'
+import { TypingHeadline } from '@/components/ui/TypingHeadline'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
+import { fadeInUp, staggerContainer } from '@/lib/utils/animations'
+
+// Dynamically import the terminal card — it's client-only + adds weight
+const SystemStatusTerminal = dynamic(
+  () => import('@/components/ui/SystemStatusTerminal').then((m) => ({ default: m.SystemStatusTerminal })),
+  { ssr: false }
+)
 
 const HEADLINE_PHRASES = [
-  "scalable AI systems.",
-  "production-grade APIs.",
-  "real-time infrastructure.",
+  'scalable AI systems.',
+  'production-grade APIs.',
+  'real-time infrastructure.',
   "RAG pipelines that don't hallucinate.",
-  "Problem Solver"
-];
+  'Problem Solver',
+]
+
+/* ─── Orchestrated load-in — delayed so it plays after IntroLoader exits ──── */
+const heroContainer = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.1, delayChildren: 0.15 },
+  },
+}
+
+const heroItem = {
+  hidden: { opacity: 0, y: 28 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+  },
+}
+
+const terminalEntry = {
+  hidden: { opacity: 0, x: 32 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const, delay: 0.5 },
+  },
+}
 
 export function Hero() {
-  const prefersReducedMotion = useReducedMotion();
-  const variants = prefersReducedMotion ? {} : staggerContainer;
-  const itemVariants = prefersReducedMotion ? {} : fadeInUp;
+  const prefersReducedMotion = useReducedMotion()
+
+  const containerVariants = prefersReducedMotion ? {} : heroContainer
+  const itemVariants      = prefersReducedMotion ? {} : heroItem
+  const terminalVariants  = prefersReducedMotion ? {} : terminalEntry
+  const initialState      = prefersReducedMotion ? { opacity: 1, y: 0 } : 'hidden'
+  const animateState      = prefersReducedMotion ? { opacity: 1, y: 0 } : 'visible'
 
   return (
-    <section id="hero" className="relative flex flex-col justify-center mx-auto px-6 pt-20 max-w-6xl min-h-[100svh]">
-      <motion.div
-        variants={variants}
-        initial="hidden"
-        animate="visible"
-        className="max-w-3xl"
-      >
-        <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-6">
-          <Badge variant="success" className="slide-in-from-bottom-2 animate-in duration-700 fade-in whitespace-nowrap">
-            <span className="bg-success shadow-[0_0_8px_rgba(34,197,94,0.8)] mr-1.5 rounded-full w-2 h-2 animate-pulse flex-shrink-0" />
-            Open to opportunities
-          </Badge>
-          {profile.now && (
-            <Badge variant="accent" className="slide-in-from-bottom-2 animate-in duration-700 fade-in delay-100 font-normal max-w-full text-left">
-              <span className="bg-accent shadow-[0_0_8px_rgba(99,102,241,0.8)] mr-1.5 rounded-full w-2 h-2 flex-shrink-0" />
-              <span className="truncate sm:whitespace-normal">{profile.now}</span>
+    <section
+      id="hero"
+      className="relative mx-auto px-6 pt-20 max-w-6xl min-h-[100svh] flex items-center"
+    >
+      {/* ── Two-column grid — text left, terminal right ────────────────────── */}
+      <div className="w-full grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 lg:gap-16 items-center py-16">
+
+        {/* ── LEFT: text stack ─────────────────────────────────────────────── */}
+        <motion.div
+          variants={containerVariants}
+          initial={initialState}
+          animate={animateState}
+          className="max-w-2xl"
+        >
+          {/* Badges */}
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-6"
+          >
+            <Badge variant="success" className="whitespace-nowrap">
+              <span className="bg-success shadow-[0_0_8px_rgba(92,219,149,0.8)] mr-1.5 rounded-full w-2 h-2 animate-pulse flex-shrink-0" />
+              Open to opportunities
             </Badge>
-          )}
+            {profile.now && (
+              <Badge variant="accent" className="font-normal max-w-full text-left">
+                <span className="bg-accent shadow-[0_0_8px_rgba(92,219,149,0.6)] mr-1.5 rounded-full w-2 h-2 flex-shrink-0" />
+                <span className="truncate sm:whitespace-normal">{profile.now}</span>
+              </Badge>
+            )}
+          </motion.div>
+
+          {/* Headline */}
+          <motion.h1
+            variants={itemVariants}
+            className="mb-6 font-bold text-primary text-5xl md:text-7xl lg:text-8xl tracking-tighter leading-[0.95]"
+          >
+            {profile.name.split(' ')[0]}
+            <br />
+            {profile.name.split(' ')[1]}.
+            <span className="block mt-3 min-h-[2.5em] sm:min-h-[1.8em] lg:min-h-0 text-muted text-3xl md:text-5xl lg:text-6xl tracking-tight">
+              I build <TypingHeadline phrases={HEADLINE_PHRASES} />
+            </span>
+          </motion.h1>
+
+          {/* Tagline */}
+          <motion.p
+            variants={itemVariants}
+            className="mb-10 max-w-xl text-muted text-lg md:text-xl text-balance leading-relaxed"
+          >
+            Backend &amp; Full-Stack Engineer specializing in distributed architectures,
+            LLM applications, and cloud-native microservices.
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-4 mb-12">
+            <Magnetic>
+              <Button asChild size="lg">
+                <a href="#projects">View Projects</a>
+              </Button>
+            </Magnetic>
+            <Magnetic>
+              <Button asChild variant="outline" size="lg">
+                <a href="/RESUME.pdf" download>Download Resume</a>
+              </Button>
+            </Magnetic>
+          </motion.div>
+
+          {/* Social links */}
+          <motion.div variants={itemVariants} className="flex items-center gap-6 text-muted">
+            <a
+              href={profile.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="-m-2 p-2 hover:text-primary hover:scale-110 active:scale-95 transition-all duration-200"
+              aria-label="GitHub"
+            >
+              <Github size={22} />
+            </a>
+            <a
+              href={profile.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="-m-2 p-2 hover:text-primary hover:scale-110 active:scale-95 transition-all duration-200"
+              aria-label="LinkedIn"
+            >
+              <Linkedin size={22} />
+            </a>
+            <a
+              href={profile.leetcode}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="-m-2 p-2 hover:text-primary hover:scale-110 active:scale-95 transition-all duration-200"
+              aria-label="LeetCode"
+            >
+              <Code2 size={22} />
+            </a>
+            <CopyEmailButton
+              email={profile.email}
+              variant="icon-only"
+              className="-m-2 p-2 hover:text-primary hover:scale-110 active:scale-95 transition-all duration-200"
+            />
+          </motion.div>
         </motion.div>
 
-        <motion.h1 variants={itemVariants} className="mb-6 font-bold text-primary text-5xl md:text-7xl lg:text-8xl tracking-tighter">
-          Hi, I&apos;m {profile.name.split(" ")[0]}.<br />
-          <span className="block mt-2 min-h-[3em] sm:min-h-[2em] lg:min-h-0 text-muted text-4xl md:text-6xl lg:text-7xl">
-            I build <TypingHeadline phrases={HEADLINE_PHRASES} />
-          </span>
-
-        </motion.h1>
-
-        <motion.p variants={itemVariants} className="mb-10 max-w-2xl text-muted text-lg md:text-xl text-balance leading-relaxed">
-          Backend & Full-Stack Engineer specializing in distributed architectures, LLM applications, and cloud-native microservices. 
-        </motion.p>
-
-        <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-4 mb-12">
-          <Magnetic>
-            <Button asChild size="lg">
-              <a href="#projects">View Projects</a>
-            </Button>
-          </Magnetic>
-          <Magnetic>
-            <Button asChild variant="outline" size="lg">
-              <a href="/RESUME.pdf" download>
-                Download Resume
-              </a>
-            </Button>
-          </Magnetic>
+        {/* ── RIGHT: health-check status card ──────────────────────────────── */}
+        <motion.div
+          variants={terminalVariants}
+          initial={initialState}
+          animate={animateState}
+          className="hidden lg:flex justify-center"
+          aria-hidden="true"
+        >
+          <SystemStatusTerminal />
         </motion.div>
+      </div>
 
-        <motion.div variants={itemVariants} className="flex items-center gap-6 text-muted">
-          <a href={profile.github} target="_blank" rel="noopener noreferrer" className="-m-2 p-2 hover:text-primary hover:scale-110 active:scale-95 transition-all duration-200" aria-label="GitHub">
-            <Github size={24} />
-          </a>
-          <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="-m-2 p-2 hover:text-primary hover:scale-110 active:scale-95 transition-all duration-200" aria-label="LinkedIn">
-            <Linkedin size={24} />
-          </a>
-          <a href={profile.leetcode} target="_blank" rel="noopener noreferrer" className="-m-2 p-2 hover:text-primary hover:scale-110 active:scale-95 transition-all duration-200" aria-label="LeetCode">
-            <Code2 size={24} />
-          </a>
-          <CopyEmailButton email={profile.email} variant="icon-only" className="-m-2 p-2 hover:text-primary hover:scale-110 active:scale-95 transition-all duration-200" />
-        </motion.div>
-      </motion.div>
+      {/* ── Mobile: status card stacked below ────────────────────────────── */}
+      <div className="lg:hidden absolute bottom-24 left-6 right-6">
+        <SystemStatusTerminal />
+      </div>
 
-      {/* Scroll Indicator */}
-      <motion.div 
+      {/* ── Scroll indicator ─────────────────────────────────────────────── */}
+      <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-        className="bottom-12 left-6 md:left-1/2 absolute md:-translate-x-1/2"
+        animate={{ opacity: prefersReducedMotion ? 1 : 1 }}
+        transition={{ delay: prefersReducedMotion ? 0 : 1.8, duration: 0.8 }}
+        className="bottom-8 left-1/2 absolute -translate-x-1/2"
       >
-        <a href="#about" aria-label="Scroll down to About section" className="flex flex-col items-center gap-2 text-muted hover:text-accent transition-colors">
+        <a
+          href="#about"
+          aria-label="Scroll down to About section"
+          className="flex flex-col items-center gap-2 text-muted hover:text-accent transition-colors duration-200"
+        >
           <span className="hidden md:block font-mono text-xs uppercase tracking-widest">Scroll</span>
-          <ArrowDown size={20} className="animate-bounce" />
+          <ArrowDown
+            size={18}
+            className={prefersReducedMotion ? '' : 'animate-bounce'}
+            style={{ animationDuration: '1.5s' }}
+          />
         </a>
       </motion.div>
     </section>
-  );
+  )
 }

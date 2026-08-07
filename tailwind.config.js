@@ -8,22 +8,34 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-inter)", "sans-serif"],
-        heading: ["var(--font-geist)", "sans-serif"],
-        mono: ["var(--font-jetbrains-mono)", "monospace"]
+        sans:    ["var(--font-inter)", "sans-serif"],
+        heading: ["var(--font-space-grotesk)", "sans-serif"],  // fixed: was --font-geist (not loaded)
+        mono:    ["var(--font-jetbrains-mono)", "monospace"],
       },
       colors: {
-        background: "var(--color-bg)",
-        surface: "var(--color-surface)",
-        "border-color": "var(--color-border)",
-        accent: "var(--color-accent)",
-        "accent-glow": "var(--color-accent-glow)",
-        "accent-amber": "var(--color-accent-amber)",
-        "accent-rose": "var(--color-accent-rose)",
-        primary: "var(--color-text-primary)",
-        muted: "var(--color-text-muted)",
-        success: "var(--color-success)"
-      }
+        /* Backgrounds */
+        background:   "var(--color-ink)",
+        surface:      "var(--color-surface)",
+        "surface-2":  "var(--color-surface-2)",
+
+        /* Borders */
+        "border-color":        "var(--color-border)",
+        "border-color-bright": "var(--color-border-bright)",
+
+        /* Accent */
+        accent:         "var(--color-signal)",
+        "accent-dim":   "var(--color-signal-dim)",
+        "accent-glow":  "var(--color-signal-glow)",
+        "accent-amber": "var(--color-ember)",
+        "accent-rose":  "var(--color-fault)",
+
+        /* Text */
+        primary: "var(--color-stone)",
+        muted:   "var(--color-fog)",
+
+        /* Alias */
+        success: "var(--color-signal)",
+      },
     }
   },
   plugins: []

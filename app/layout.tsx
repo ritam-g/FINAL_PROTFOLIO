@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Space_Grotesk, Inter, JetBrains_Mono } from 'next/font/google'
 import { IntroProvider } from '@/lib/hooks/useIntroComplete'
+import { SmoothScrollProvider } from '@/components/providers/SmoothScrollProvider'
 import { profile } from '@/data/profile'
 import { ClientEffects } from '@/components/ui/ClientEffects'
 import './globals.css'
@@ -58,14 +59,14 @@ export const metadata: Metadata = {
     url: 'https://final-protfolio-ruddy.vercel.app',
     siteName: 'Ritam Maty — Portfolio',
     locale: 'en_US',
-    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+    images: [{ url: '/og', width: 1200, height: 630, alt: 'Ritam Maty — Backend & Full-Stack Engineer' }],
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Ritam Maty — Backend & Full-Stack Engineer',
     description: 'Building production-grade APIs, RAG pipelines, and cloud-native systems.',
-    images: ['/og-image.png'],
+    images: ['/og'],
   },
   robots: {
     index: true,
@@ -75,6 +76,9 @@ export const metadata: Metadata = {
       follow: true,
       'max-image-preview': 'large',
     },
+  },
+  alternates: {
+    canonical: 'https://final-protfolio-ruddy.vercel.app',
   },
 }
 
@@ -95,6 +99,15 @@ export default function RootLayout({
       profile.leetcode,
     ].filter(Boolean),
     email: `mailto:${profile.email}`,
+    knowsAbout: [
+      'Node.js', 'TypeScript', 'React', 'Next.js', 'Kubernetes', 'Docker',
+      'MongoDB', 'Redis', 'LangChain', 'RAG', 'Distributed Systems',
+      'Microservices', 'REST APIs', 'Socket.IO',
+    ],
+    worksFor: {
+      '@type': 'Organization',
+      name: 'iPROTECHS Commercial Solutions',
+    },
   }
 
   return (
@@ -116,7 +129,9 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        <IntroProvider>{children}</IntroProvider>
+        <SmoothScrollProvider>
+          <IntroProvider>{children}</IntroProvider>
+        </SmoothScrollProvider>
       </body>
     </html>
   )

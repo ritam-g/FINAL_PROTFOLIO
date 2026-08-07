@@ -1,54 +1,94 @@
-import { profile } from "@/data/profile";
-import { Github, Linkedin, Mail } from "lucide-react";
-import { navigation } from "@/lib/constants/navigation";
+import { profile } from '@/data/profile'
+import { Github, Linkedin, Mail } from 'lucide-react'
+import { navigation } from '@/lib/constants/navigation'
 
 export function Footer() {
+  const year = new Date().getFullYear()
+
   return (
-    <footer className="border-t border-border-color bg-background py-12 mt-20">
-      <div className="max-w-6xl mx-auto px-6 grid gap-8 md:grid-cols-3">
+    <footer className="border-t border-border-color bg-background mt-20">
+      <div className="max-w-6xl mx-auto px-6 py-12 grid gap-8 md:grid-cols-3">
+
+        {/* Brand */}
         <div>
-          <span className="font-heading font-bold text-xl tracking-tighter text-primary mb-4 block">
+          <span className="font-heading font-bold text-xl tracking-tighter text-primary mb-3 block">
             RM.
           </span>
-          <p className="text-sm text-muted max-w-xs">
-            Backend and Full-Stack Engineer specializing in distributed systems, AI/LLM applications, and cloud-native microservices.
+          <p className="text-xs text-muted leading-relaxed max-w-xs mb-4">
+            Backend &amp; Full-Stack Engineer — distributed systems, AI/LLM, cloud-native.
           </p>
+          {/* System status footer line */}
+          <div className="font-mono text-[10px] text-fog flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse inline-block" />
+            <span>status: open · {profile.location}</span>
+          </div>
         </div>
 
-        <div>
-          <h4 className="font-bold text-primary mb-4">Quick Links</h4>
-          <ul className="space-y-2 text-sm text-muted">
+        {/* Quick links */}
+        <nav aria-label="Footer navigation">
+          <h4 className="font-bold text-primary text-sm mb-4">Navigation</h4>
+          <ul className="space-y-2 text-sm">
             {navigation.map((item) => (
               <li key={item.name}>
-                <a href={item.href} className="hover:text-accent transition-colors">
-                  {item.name}
+                <a
+                  href={item.href}
+                  className="text-muted hover:text-accent transition-colors duration-150 font-mono text-xs"
+                >
+                  <span className="text-accent-dim mr-1.5">//</span>
+                  {item.name.toLowerCase()}
                 </a>
               </li>
             ))}
           </ul>
-        </div>
+        </nav>
 
+        {/* Connect */}
         <div>
-          <h4 className="font-bold text-primary mb-4">Connect</h4>
-          <div className="flex gap-4 mb-6">
-            <a href={profile.github} target="_blank" rel="noopener noreferrer" className="text-muted hover:text-primary transition-colors" aria-label="GitHub">
-              <Github size={20} />
+          <h4 className="font-bold text-primary text-sm mb-4">Connect</h4>
+          <div className="flex gap-4 mb-5">
+            <a
+              href={profile.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted hover:text-primary transition-colors duration-150"
+              aria-label="GitHub profile"
+            >
+              <Github size={18} />
             </a>
-            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="text-muted hover:text-primary transition-colors" aria-label="LinkedIn">
-              <Linkedin size={20} />
+            <a
+              href={profile.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted hover:text-primary transition-colors duration-150"
+              aria-label="LinkedIn profile"
+            >
+              <Linkedin size={18} />
             </a>
-            <a href={`mailto:${profile.email}`} className="text-muted hover:text-primary transition-colors" aria-label="Email">
-              <Mail size={20} />
+            <a
+              href={`mailto:${profile.email}`}
+              className="text-muted hover:text-primary transition-colors duration-150"
+              aria-label="Send email"
+            >
+              <Mail size={18} />
             </a>
           </div>
-          <p className="text-sm text-muted">
-            © {new Date().getFullYear()} {profile.name}. All rights reserved.
+          <p className="font-mono text-[10px] text-fog">
+            © {year} {profile.name}
           </p>
         </div>
       </div>
-      <div className="max-w-6xl mx-auto px-6 mt-12 pt-8 border-t border-border-color/50 text-center text-xs text-muted/50">
-        Built with Next.js & Tailwind CSS. Designed for performance and accessibility.
+
+      {/* Bottom strip */}
+      <div className="border-t border-border-color/40">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+          <span className="font-mono text-[10px] text-fog/60">
+            built · next.js + tailwind + gsap + framer-motion
+          </span>
+          <span className="font-mono text-[10px] text-fog/60">
+            v1.0.0
+          </span>
+        </div>
       </div>
     </footer>
-  );
+  )
 }
