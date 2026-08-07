@@ -184,21 +184,21 @@ export function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* ── RIGHT: health-check status card ──────────────────────────────── */}
+        {/* ── RIGHT / BOTTOM: health-check status card ──────────────────────────
+         *  On desktop (lg+): sits in the auto-width right grid column.
+         *  On mobile: flows naturally below the text in the single-column grid.
+         *  NO absolute positioning — the grid handles reflow at every breakpoint.
+         * ──────────────────────────────────────────────────────────────────── */}
         <motion.div
           variants={terminalVariants}
           initial={initialState}
           animate={animateState}
-          className="hidden lg:flex justify-center"
-          aria-hidden="true"
+          className="flex justify-center lg:justify-start mt-8 lg:mt-0 pb-4 lg:pb-0"
         >
-          <SystemStatusTerminal />
+          <div className="w-full max-w-sm lg:max-w-xs">
+            <SystemStatusTerminal />
+          </div>
         </motion.div>
-      </div>
-
-      {/* ── Mobile: status card stacked below ────────────────────────────── */}
-      <div className="lg:hidden absolute bottom-24 left-6 right-6">
-        <SystemStatusTerminal />
       </div>
 
       {/* ── Scroll indicator ─────────────────────────────────────────────── */}
