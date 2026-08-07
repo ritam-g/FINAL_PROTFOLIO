@@ -1,5 +1,6 @@
 'use client'
 
+import { useCallback } from 'react'
 import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { ArrowDown, Github, Linkedin, Code2 } from 'lucide-react'
@@ -7,7 +8,6 @@ import { profile } from '@/data/profile'
 import { Button, Badge, Magnetic, CopyEmailButton } from '@/components/ui'
 import { TypingHeadline } from '@/components/ui/TypingHeadline'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
-import { fadeInUp, staggerContainer } from '@/lib/utils/animations'
 
 // Dynamically import the terminal card — it's client-only + adds weight
 const SystemStatusTerminal = dynamic(
@@ -58,6 +58,22 @@ export function Hero() {
   const initialState      = prefersReducedMotion ? { opacity: 1, y: 0 } : 'hidden'
   const animateState      = prefersReducedMotion ? { opacity: 1, y: 0 } : 'visible'
 
+  /**
+   * Safety-net ScrollTrigger refresh.
+   * Called by TypingHeadline once the first full phrase has been typed out,
+   * meaning the hero's final height is now stable and all downstream
+   * ScrollTrigger instances can recalculate their offsets against a settled DOM.
+   */
+  const handleFirstTyped = useCallback(() => {
+    if (typeof window === 'undefined') return
+    import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
+      // Small rAF delay to let the browser commit the final paint
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh()
+      })
+    })
+  }, [])
+
   return (
     <section
       id="hero"
@@ -98,8 +114,13 @@ export function Hero() {
             {profile.name.split(' ')[0]}
             <br />
             {profile.name.split(' ')[1]}.
-            <span className="block mt-3 min-h-[2.5em] sm:min-h-[1.8em] lg:min-h-0 text-muted text-3xl md:text-5xl lg:text-6xl tracking-tight">
-              I build <TypingHeadline phrases={HEADLINE_PHRASES} />
+            {/*
+             * The span no longer carries min-h workarounds.
+             * TypingHeadline's invisible placeholder reserves the exact height
+             * of the longest phrase, eliminating the CLS and ScrollTrigger desync.
+             */}
+            <span className="block mt-3 text-muted text-3xl md:text-5xl lg:text-6xl tracking-tight">
+              I build <TypingHeadline phrases={HEADLINE_PHRASES} onFirstTyped={handleFirstTyped} />
             </span>
           </motion.h1>
 
