@@ -50,9 +50,6 @@ export const metadata: Metadata = {
     'Kubernetes',
   ],
   authors: [{ name: 'Ritam Maty', url: 'https://final-protfolio-ruddy.vercel.app' }],
-  alternates: {
-    canonical: '/',
-  },
   openGraph: {
     title: 'Ritam Maty — Backend & Full-Stack Engineer',
     description: 'Building production-grade APIs, RAG pipelines, and cloud-native systems.',

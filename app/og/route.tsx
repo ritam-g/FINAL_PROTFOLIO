@@ -2,15 +2,15 @@ import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
 
-export const alt = 'Ritam Maty — Backend & Full-Stack Engineer'
-export const size = { width: 1200, height: 630 }
-export const contentType = 'image/png'
-
 /**
  * Dynamic OG image — mirrors the health-check status card aesthetic from the Hero.
- * Rendered at /og and referenced in layout.tsx metadata.
+ * Served at GET /og and referenced in layout.tsx openGraph.images.
+ *
+ * Must be a named HTTP-method export (GET) to satisfy App Router route types.
+ * The alt/size/contentType named exports are only valid in the file-based
+ * opengraph-image.tsx convention — not in route.tsx.
  */
-export default function OGImage() {
+export function GET() {
   return new ImageResponse(
     (
       <div
@@ -137,6 +137,6 @@ export default function OGImage() {
         </div>
       </div>
     ),
-    { ...size }
+    { width: 1200, height: 630 }
   )
 }
